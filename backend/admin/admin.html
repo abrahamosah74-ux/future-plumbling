@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        // Check authentication before page loads
+        (function() {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                // Redirect to login page
+                window.location.href = '/admin/login.html';
+            }
+        })();
+    </script>
 </head>
 <body>
     <div class="admin-container">
@@ -35,7 +45,7 @@
                 </ul>
                 
                 <div class="admin-logout">
-                    <a href="../index.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Back to Website</a>
+                    <button id="logoutBtn" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
                 </div>
             </nav>
         </aside>
@@ -120,51 +130,8 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>#FP-0012</td>
-                                <td>Kwame Mensah</td>
-                                <td>2023-10-15</td>
-                                <td>₵ 1,250.00</td>
-                                <td><span class="status status-pending">Pending</span></td>
-                                <td>
-                                    <button class="btn-action view-order" data-id="12"><i class="fas fa-eye"></i></button>
-                                    <button class="btn-action edit-order" data-id="12"><i class="fas fa-edit"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#FP-0011</td>
-                                <td>Ama Serwaa</td>
-                                <td>2023-10-14</td>
-                                <td>₵ 850.00</td>
-                                <td><span class="status status-completed">Completed</span></td>
-                                <td>
-                                    <button class="btn-action view-order" data-id="11"><i class="fas fa-eye"></i></button>
-                                    <button class="btn-action edit-order" data-id="11"><i class="fas fa-edit"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#FP-0010</td>
-                                <td>Kojo Ansah</td>
-                                <td>2023-10-13</td>
-                                <td>₵ 2,150.00</td>
-                                <td><span class="status status-pending">Pending</span></td>
-                                <td>
-                                    <button class="btn-action view-order" data-id="10"><i class="fas fa-eye"></i></button>
-                                    <button class="btn-action edit-order" data-id="10"><i class="fas fa-edit"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>#FP-0009</td>
-                                <td>Esi Asante</td>
-                                <td>2023-10-12</td>
-                                <td>₵ 450.00</td>
-                                <td><span class="status status-completed">Completed</span></td>
-                                <td>
-                                    <button class="btn-action view-order" data-id="9"><i class="fas fa-eye"></i></button>
-                                    <button class="btn-action edit-order" data-id="9"><i class="fas fa-edit"></i></button>
-                                </td>
-                            </tr>
+                        <tbody id="recent-orders-body">
+                            <!-- Recent orders will be loaded here -->
                         </tbody>
                     </table>
                 </div>
@@ -179,7 +146,7 @@
                             <button class="btn btn-primary" id="add-order"><i class="fas fa-plus"></i> Add Order</button>
                             <div class="search-container">
                                 <input type="text" placeholder="Search orders..." id="search-orders">
-                                <button id="search-orders-btn"><i class="fas fa-search"></i></button>
+                                <button id="search-orders-btn" title="Search orders"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
                     </div>
@@ -194,7 +161,7 @@
                     <table class="admin-table">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" id="select-all-orders"></th>
+                                <th><input type="checkbox" id="select-all-orders" title="Select all orders"></th>
                                 <th>Order ID</th>
                                 <th>Customer</th>
                                 <th>Products</th>
@@ -211,9 +178,9 @@
                     
                     <div class="table-footer">
                         <div class="pagination">
-                            <button class="pagination-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                            <button class="pagination-btn" disabled title="Previous page"><i class="fas fa-chevron-left"></i></button>
                             <span class="pagination-info">Page 1 of 3</span>
-                            <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
+                            <button class="pagination-btn" title="Next page"><i class="fas fa-chevron-right"></i></button>
                         </div>
                     </div>
                 </div>
@@ -229,7 +196,7 @@
                             <button class="btn btn-secondary" id="import-products"><i class="fas fa-file-import"></i> Import</button>
                             <div class="search-container">
                                 <input type="text" placeholder="Search products..." id="search-products">
-                                <button id="search-products-btn"><i class="fas fa-search"></i></button>
+                                <button id="search-products-btn" title="Search products"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
                     </div>
@@ -306,7 +273,10 @@
                                     <label for="product-image">Image URL</label>
                                     <input type="text" id="product-image" placeholder="https://example.com/image.jpg">
                                     <small>Or upload an image</small>
-                                    <input type="file" id="product-image-upload" accept="image/*" style="margin-top: 5px;">
+                                    <input type="file" id="product-image-upload" accept="image/*" title="Upload product image">
+                                    <div id="image-preview-container">
+                                        <img id="image-preview" src="" alt="Preview">
+                                    </div>
                                 </div>
                                 
                                 <div class="form-group">
@@ -321,6 +291,74 @@
                                 <div class="form-actions">
                                     <button type="button" class="btn btn-secondary close-modal">Cancel</button>
                                     <button type="submit" class="btn btn-primary">Save Product</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Form Modal -->
+                <div class="modal" id="service-modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="service-modal-title">Add New Service</h3>
+                            <button class="close-modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="service-form">
+                                <div class="form-group">
+                                    <label for="service-name">Service Name *</label>
+                                    <input type="text" id="service-name" placeholder="e.g., Pipe Installation" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="service-category">Category *</label>
+                                    <select id="service-category" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Installation">Installation</option>
+                                        <option value="Repair">Repair</option>
+                                        <option value="Maintenance">Maintenance</option>
+                                        <option value="Inspection">Inspection</option>
+                                        <option value="Emergency">Emergency</option>
+                                        <option value="Consultation">Consultation</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="service-description">Description *</label>
+                                    <textarea id="service-description" rows="4" placeholder="Detailed description of the service" required></textarea>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="service-price">Price (₵) *</label>
+                                        <input type="number" id="service-price" step="0.01" min="0" placeholder="0.00" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="service-duration">Duration (hours) *</label>
+                                        <input type="number" id="service-duration" step="0.5" min="0.5" placeholder="e.g., 2" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="service-image">Image URL</label>
+                                    <input type="text" id="service-image" placeholder="https://example.com/image.jpg">
+                                    <small>Or upload an image</small>
+                                    <input type="file" id="service-image-upload" accept="image/*" title="Upload service image">
+                                    <div id="service-image-preview-container">
+                                        <img id="service-image-preview" src="" alt="Preview">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="service-active" checked> Active
+                                    </label>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Save Service</button>
                                 </div>
                             </form>
                         </div>
@@ -350,7 +388,7 @@
                         <div class="table-actions">
                             <div class="search-container">
                                 <input type="text" placeholder="Search customers..." id="search-customers">
-                                <button id="search-customers-btn"><i class="fas fa-search"></i></button>
+                                <button id="search-customers-btn" title="Search customers"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
                     </div>
@@ -381,7 +419,7 @@
                     <div class="messages-sidebar">
                         <div class="messages-search">
                             <input type="text" placeholder="Search messages...">
-                            <button><i class="fas fa-search"></i></button>
+                            <button title="Search messages"><i class="fas fa-search"></i></button>
                         </div>
                         <div class="messages-list" id="messages-list">
                             <!-- Messages list will be loaded here -->
@@ -398,7 +436,7 @@
                                 <p>Select a message from the list to view its content</p>
                             </div>
                         </div>
-                        <div class="message-reply" id="message-reply" style="display: none;">
+                        <div class="message-reply" id="message-reply">
                             <textarea placeholder="Type your reply here..."></textarea>
                             <button class="btn btn-primary">Send Reply</button>
                         </div>
@@ -488,6 +526,10 @@
         </main>
     </div>
 
+    <script src="admin-products.js"></script>
+    <script src="admin-orders.js"></script>
+    <script src="admin-dashboard.js"></script>
+    <script src="admin-profile.js"></script>
     <script src="admin.js"></script>
 </body>
 </html>

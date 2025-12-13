@@ -1,182 +1,195 @@
 [
   {
-    "id": 1,
-    "name": "Modern Chrome Faucet",
-    "description": "High-quality chrome finish kitchen faucet with pull-out sprayer. Water-efficient design with ceramic disc valves for durability.",
-    "price": 450.00,
-    "category": "Faucets",
-    "image": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-    "featured": true,
-    "stock": 25,
-    "rating": 4.8,
-    "reviews": 42
-  },
-  {
     "id": 2,
     "name": "PVC Plumbing Pipes",
     "description": "Durable 1-inch PVC pipes for water supply systems. UV resistant, corrosion-free, and suitable for both hot and cold water.",
-    "price": 120.00,
+    "price": 120,
     "category": "Pipes",
-    "image": "https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/736x/e4/0f/31/e40f31562fa0b3065eb15661251ae832.jpg",
     "featured": true,
     "stock": 150,
     "rating": 4.6,
-    "reviews": 38
+    "reviews": 38,
+    "active": true
   },
   {
     "id": 3,
     "name": "Automatic Water Pump",
     "description": "1HP automatic water pump with pressure control switch. Self-priming, energy-efficient, and suitable for residential water systems.",
-    "price": 850.00,
+    "price": 850,
     "category": "Pumps",
-    "image": "https://images.unsplash.com/photo-1592921870789-04563d55041c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/1200x/b5/42/9d/b5429dba06c8b46ae93ba3e94086dd7f.jpg",
     "featured": true,
     "stock": 18,
     "rating": 4.7,
-    "reviews": 56
+    "reviews": 56,
+    "active": true
   },
   {
     "id": 4,
     "name": "Rain Shower Set",
     "description": "Complete shower set with 8-inch rain shower head, hand shower, and thermostatic mixer. Chrome finish with anti-lime system.",
-    "price": 650.00,
+    "price": 650,
     "category": "Showers",
-    "image": "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/1200x/d4/b0/a9/d4b0a99f2301ee5841ebe530b0ff3827.jpg",
     "featured": true,
     "stock": 32,
     "rating": 4.9,
-    "reviews": 67
+    "reviews": 67,
+    "active": true
   },
   {
     "id": 5,
     "name": "Modern Toilet Bowl",
     "description": "One-piece ceramic toilet bowl with efficient dual-flush system. Water-saving design (3/6L flush) and comfortable height.",
-    "price": 750.00,
+    "price": 750,
     "category": "Toilets",
-    "image": "https://images.unsplash.com/photo-1589820296156-2454bb8a6ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/1200x/b7/a6/8f/b7a68fdd9be435d00bbbcaac1542474a.jpg",
     "featured": false,
     "stock": 22,
     "rating": 4.5,
-    "reviews": 29
+    "reviews": 29,
+    "active": true
   },
   {
     "id": 6,
     "name": "Plastic Water Tank",
     "description": "1000L polyethylene water storage tank with UV protection. Food-grade material, corrosion-resistant, and easy to install.",
-    "price": 1200.00,
+    "price": 1200,
     "category": "Tanks",
-    "image": "https://images.unsplash.com/photo-1621967299229-c6aae5c3496e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/1200x/12/72/7b/12727b4e085a8a2e1b4bd5a9fb230fcd.jpg",
     "featured": false,
     "stock": 15,
     "rating": 4.4,
-    "reviews": 31
+    "reviews": 31,
+    "active": true
   },
   {
     "id": 7,
     "name": "Professional Pipe Wrench",
     "description": "14-inch professional pipe wrench with adjustable jaw. Drop-forged steel construction with comfortable grip handle.",
-    "price": 85.00,
+    "price": 85,
     "category": "Tools",
-    "image": "https://images.unsplash.com/photo-1581094792207-7d4d5c2c2d3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/1200x/3f/5d/c2/3f5dc275c1ac47bde636597efa82585c.jpg",
     "featured": false,
     "stock": 45,
     "rating": 4.7,
-    "reviews": 23
+    "reviews": 23,
+    "active": true
   },
   {
     "id": 8,
     "name": "Stainless Steel Sink",
     "description": "Double bowl stainless steel kitchen sink with soundproof coating. 18-gauge steel with satin finish and included drain set.",
-    "price": 550.00,
-    "category": "Sinks",
-    "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "price": 550,
+    "category": "Faucets",
+    "image": "https://i.pinimg.com/1200x/4a/13/33/4a133380821abe386d81cbdce6748ad2.jpg",
     "featured": false,
     "stock": 28,
     "rating": 4.6,
-    "reviews": 34
+    "reviews": 34,
+    "active": true
   },
   {
     "id": 9,
     "name": "Digital Water Meter",
     "description": "Smart digital water meter with LCD display and data logging. Measures flow rate and total consumption with high accuracy.",
-    "price": 350.00,
-    "category": "Meters",
-    "image": "https://images.unsplash.com/photo-1581093450334-5c0c6c2c3c3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "price": 350,
+    "category": "Tools",
+    "image": "https://i.pinimg.com/1200x/e5/19/8c/e5198ceec1e1e9e90fe9c9827b388fbf.jpg",
     "featured": false,
     "stock": 40,
     "rating": 4.3,
-    "reviews": 19
+    "reviews": 19,
+    "active": true
   },
   {
     "id": 10,
     "name": "PVC Pipe Fittings Kit",
     "description": "Assorted PVC pipe fittings kit including elbows, tees, couplings, and adapters. Suitable for 1-inch plumbing systems.",
-    "price": 45.00,
+    "price": 45,
     "category": "Fittings",
-    "image": "https://images.unsplash.com/photo-1581094795150-5e8b43c2c7d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/1200x/83/a5/1e/83a51e0d733c5e22abe7a2eb35a36a63.jpg",
     "featured": false,
     "stock": 120,
     "rating": 4.5,
-    "reviews": 41
+    "reviews": 41,
+    "active": true
   },
   {
     "id": 11,
     "name": "Instant Water Heater",
     "description": "50L electric instant water heater with digital temperature control. Thermal cut-off protection and energy-saving mode.",
-    "price": 950.00,
+    "price": 950,
     "category": "Heaters",
-    "image": "https://images.unsplash.com/photo-1581092918056-0c4c3a8a8a8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/736x/7f/23/07/7f230795e2ff31eb7ba127b271189995.jpg",
     "featured": false,
     "stock": 20,
     "rating": 4.8,
-    "reviews": 52
+    "reviews": 52,
+    "active": true
   },
   {
     "id": 12,
     "name": "Drain Cleaning Solution",
     "description": "Professional-grade chemical drain cleaner for clogged pipes. Biodegradable formula safe for all plumbing systems.",
-    "price": 65.00,
+    "price": 65,
     "category": "Chemicals",
-    "image": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/736x/62/76/62/627662e3a6ec329f8832a068f95dfa11.jpg",
     "featured": false,
     "stock": 85,
     "rating": 4.2,
-    "reviews": 27
+    "reviews": 27,
+    "active": true
   },
   {
     "id": 13,
     "name": "Precision Pipe Cutter",
     "description": "Professional pipe cutter for precise cuts on PVC and copper pipes. Ratchet mechanism for easy operation and clean cuts.",
-    "price": 120.00,
+    "price": 120,
     "category": "Tools",
-    "image": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/1200x/9c/15/d2/9c15d2c7f706ae1a63a46aac74089232.jpg",
     "featured": false,
     "stock": 35,
     "rating": 4.6,
-    "reviews": 33
+    "reviews": 33,
+    "active": true
   },
   {
     "id": 14,
     "name": "Modern Acrylic Bathtub",
     "description": "Freestanding acrylic bathtub with non-slip surface. Contemporary design with overflow protection and quick-drain system.",
-    "price": 1800.00,
+    "price": 1800,
     "category": "Baths",
-    "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/736x/b7/6b/e6/b76be6ec4bbf9a3da4a5942dd810032c.jpg",
     "featured": false,
     "stock": 12,
     "rating": 4.9,
-    "reviews": 48
+    "reviews": 48,
+    "active": true
   },
   {
     "id": 15,
     "name": "Complete Valve Set",
     "description": "Professional plumbing valve set including ball valves, check valves, and pressure relief valves. Brass construction with chrome finish.",
-    "price": 280.00,
+    "price": 280,
     "category": "Valves",
-    "image": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    "image": "https://i.pinimg.com/736x/af/96/c3/af96c3208e431bad60a711c8bded53de.jpg",
     "featured": false,
     "stock": 60,
     "rating": 4.7,
-    "reviews": 39
+    "reviews": 39,
+    "active": true
+  },
+  {
+    "id": 16,
+    "name": "Modern Chrome Faucet",
+    "category": "Baths",
+    "description": "Luxier single hole bathroom Modern Chrome Faucet with drain assembly",
+    "price": 450,
+    "stock": 45,
+    "image": "https://i.pinimg.com/736x/f3/7e/3f/f37e3f05788da45250ebe85c8377da8c.jpg",
+    "featured": true,
+    "active": true
   }
 ]

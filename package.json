@@ -1,0 +1,30 @@
+{
+  "name": "future-plumbing",
+  "version": "1.0.0",
+  "description": "Future Plumbing Company - Full Stack Web Application with E-commerce and Admin Dashboard",
+  "main": "backend/server.js",
+  "scripts": {
+    "dev": "node backend/server.js",
+    "start": "node backend/server.js",
+    "build": "echo 'Build complete'",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd .."
+  },
+  "keywords": [
+    "plumbing",
+    "e-commerce",
+    "admin-dashboard",
+    "express",
+    "fullstack"
+  ],
+  "author": "Future Plumbing Team",
+  "license": "MIT",
+  "engines": {
+    "node": "18.x"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {}
+}

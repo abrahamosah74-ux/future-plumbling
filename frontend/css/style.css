@@ -23,7 +23,8 @@ body {
     font-family: 'Roboto', sans-serif;
     color: var(--dark-color);
     line-height: 1.6;
-    background-color: #ffffff;
+    background-color: #f8f9fa;
+    min-height: 100vh;
 }
 
 h1, h2, h3, h4 {
@@ -865,5 +866,404 @@ h1, h2, h3, h4 {
     
     .about-features {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Page Status Notification */
+.page-status {
+    background: #1a73e8;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* No Products Message */
+.no-products-message {
+    display: none;
+}
+.chat-agent-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+}
+
+.chat-agent-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    height: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 40px rgba(0,0,0,0.16);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(500px);
+    transition: transform 0.3s ease;
+    z-index: 9999;
+    font-family: 'Poppins', sans-serif;
+}
+
+.chat-widget.active {
+    transform: translateY(0);
+}
+
+.chat-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.close-chat {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease;
+}
+
+.close-chat:hover {
+    transform: rotate(90deg);
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: #f5f5f5;
+}
+
+.welcome-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.welcome-message p {
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+.customer-message {
+    justify-content: flex-end;
+}
+
+.agent-message {
+    justify-content: flex-start;
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    word-wrap: break-word;
+}
+
+.customer-message .message-bubble {
+    background-color: #667eea;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.agent-message .message-bubble {
+    background-color: #e0e0e0;
+    color: #333;
+    border-bottom-left-radius: 4px;
+}
+
+.message-bubble p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.chat-input-area {
+    padding: 15px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    gap: 10px;
+}
+
+#chat-input {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#chat-input:focus {
+    border-color: #667eea;
+}
+
+#send-message {
+    background-color: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#send-message:hover {
+    background-color: #5568d3;
+}
+
+/* Payment Modal Styles */
+#payment-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+#payment-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    max-width: 500px;
+    width: 90%;
+    animation: slideUp 0.3s ease;
+}
+
+.modal-header {
+    padding: 24px;
+    border-bottom: 1px solid var(--light-gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--dark-color);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--gray-color);
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.modal-close:hover {
+    background-color: var(--light-gray);
+    color: var(--dark-color);
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.payment-option {
+    position: relative;
+}
+
+.payment-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.payment-option label {
+    display: block;
+    padding: 16px;
+    border: 2px solid var(--light-gray);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: #fff;
+}
+
+.payment-option input[type="radio"]:checked + label {
+    border-color: var(--primary-color);
+    background-color: rgba(26, 115, 232, 0.05);
+}
+
+.payment-option-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--dark-color);
+}
+
+.payment-option-header i {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.payment-option-desc {
+    margin: 0;
+    font-size: 13px;
+    color: var(--gray-color);
+    margin-left: 36px;
+}
+
+.payment-note {
+    background-color: #e8f5e9;
+    border-left: 4px solid var(--secondary-color);
+    padding: 12px 16px;
+    border-radius: 4px;
+    display: flex;
+    gap: 12px;
+    font-size: 13px;
+    color: #1b5e20;
+}
+
+.payment-note i {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.payment-note p {
+    margin: 0;
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--light-gray);
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.modal-footer .btn {
+    padding: 10px 24px;
+    margin: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .chat-widget {
+        width: calc(100% - 40px);
+        height: 400px;
+        right: 20px;
+        bottom: 80px;
+    }
+    
+    .chat-agent-btn span {
+        display: none;
+    }
+    
+    .chat-agent-btn {
+        padding: 12px;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        justify-content: center;
     }
 }

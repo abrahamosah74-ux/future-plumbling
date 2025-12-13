@@ -193,36 +193,102 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Create order summary
-            let orderSummary = `*Future Plumbing Order*\n\n`;
-            let total = 0;
-            
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                orderSummary += `• ${item.name} x${item.quantity}: ₵${itemTotal.toFixed(2)}\n`;
-            });
-            
-            orderSummary += `\n*Total: ₵${total.toFixed(2)}*\n\n`;
-            orderSummary += `Customer Name: [Please provide]\n`;
-            orderSummary += `Delivery Address: [Please provide]\n`;
-            orderSummary += `Phone Number: [Please provide]`;
-            
-            // Encode for WhatsApp
-            const encodedMessage = encodeURIComponent(orderSummary);
-            const whatsappUrl = `https://wa.me/233547085680?text=${encodedMessage}`;
-            
-            // Open WhatsApp
-            window.open(whatsappUrl, '_blank');
+            // Show payment method modal
+            showPaymentModal();
         });
     }
     
+    // Payment Modal Functions
+    const paymentModal = document.getElementById('payment-modal');
+    const closePaymentBtn = document.getElementById('close-payment-modal');
+    const cancelPaymentBtn = document.getElementById('cancel-payment');
+    const confirmPaymentBtn = document.getElementById('confirm-payment');
+    
+    function showPaymentModal() {
+        if (paymentModal) {
+            paymentModal.classList.add('active');
+        }
+    }
+    
+    function closePaymentModal() {
+        if (paymentModal) {
+            paymentModal.classList.remove('active');
+        }
+    }
+    
+    if (closePaymentBtn) {
+        closePaymentBtn.addEventListener('click', closePaymentModal);
+    }
+    
+    if (cancelPaymentBtn) {
+        cancelPaymentBtn.addEventListener('click', closePaymentModal);
+    }
+    
+    if (paymentModal) {
+        paymentModal.addEventListener('click', function(e) {
+            if (e.target === paymentModal) {
+                closePaymentModal();
+            }
+        });
+    }
+    
+    if (confirmPaymentBtn) {
+        confirmPaymentBtn.addEventListener('click', function() {
+            const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
+            
+            if (!selectedMethod) {
+                alert('Please select a payment method');
+                return;
+            }
+            
+            const paymentMethod = selectedMethod.value;
+            processCheckout(paymentMethod);
+            closePaymentModal();
+        });
+    }
+    
+    function processCheckout(paymentMethod) {
+        // Create order summary for WhatsApp
+        let orderSummary = `*Future Plumbing Order*\n\n`;
+        let total = 0;
+        
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            orderSummary += `• ${item.name} x${item.quantity}: ₵${itemTotal.toFixed(2)}\n`;
+        });
+        
+        orderSummary += `\n*Total: ₵${total.toFixed(2)}*\n\n`;
+        
+        if (paymentMethod === 'mobile-money') {
+            orderSummary += `*Payment Method: Mobile Money*\n`;
+            orderSummary += `Payment Options:\n`;
+            orderSummary += `• MTN Mobile Money\n`;
+            orderSummary += `• Vodafone Cash\n`;
+            orderSummary += `• AirtelTigo Money\n\n`;
+        } else {
+            orderSummary += `*Payment Method: WhatsApp*\n\n`;
+        }
+        
+        orderSummary += `Please provide:\n`;
+        orderSummary += `• Your Full Name\n`;
+        orderSummary += `• Delivery Address\n`;
+        orderSummary += `• Phone Number`;
+        
+        // Encode for WhatsApp
+        const encodedMessage = encodeURIComponent(orderSummary);
+        const whatsappUrl = `https://wa.me/233547085680?text=${encodedMessage}`;
+        
+        // Open WhatsApp
+        window.open(whatsappUrl, '_blank');
+    }
+    
     // Show notification function
-    function showNotification(message) {
+    function showNotification(message, type = 'success') {
         const notification = document.createElement('div');
-        notification.className = 'notification animate__animated animate__fadeInUp';
+        notification.className = `notification animate__animated animate__fadeInUp ${type}`;
         notification.innerHTML = `
-            <i class="fas fa-check-circle"></i>
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
             <span>${message}</span>
         `;
         
@@ -296,27 +362,29 @@ document.addEventListener('DOMContentLoaded', function() {
         sortFilter.addEventListener('change', filterProducts);
     }
     
-    // Product data (in a real app, this would come from the server)
-    const productsData = [
-        { id: 1, name: "Modern Faucet", description: "High-quality chrome finish faucet for kitchen sinks", price: 450.00, category: "Faucets", image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", featured: true },
-        { id: 2, name: "PVC Pipes", description: "Durable PVC pipes for water supply systems", price: 120.00, category: "Pipes", image: "https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", featured: true },
-        { id: 3, name: "Water Pump", description: "Automatic water pump with pressure control", price: 850.00, category: "Pumps", image: "https://images.unsplash.com/photo-1592921870789-04563d55041c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", featured: true },
-        { id: 4, name: "Shower Set", description: "Complete shower set with rain shower head", price: 650.00, category: "Showers", image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80", featured: true },
-        { id: 5, name: "Toilet Bowl", description: "Modern ceramic toilet bowl with efficient flush", price: 750.00, category: "Toilets", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" },
-        { id: 6, name: "Water Tank", description: "1000L plastic water storage tank", price: 1200.00, category: "Tanks", image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" },
-        { id: 7, name: "Pipe Wrench", description: "Professional pipe wrench for plumbing work", price: 85.00, category: "Tools", image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=1" },
-        { id: 8, name: "Sink Basin", description: "Stainless steel kitchen sink basin", price: 550.00, category: "Sinks", image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=2" },
-        { id: 9, name: "Water Meter", description: "Digital water meter with accurate reading", price: 350.00, category: "Meters", image: "https://images.unsplash.com/photo-1592921870789-04563d55041c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=3" },
-        { id: 10, name: "Pipe Fittings", description: "Assorted PVC pipe fittings and connectors", price: 45.00, category: "Fittings", image: "https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=4" },
-        { id: 11, name: "Water Heater", description: "Electric instant water heater 50L", price: 950.00, category: "Heaters", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=5" },
-        { id: 12, name: "Drain Cleaner", description: "Chemical drain cleaner for clogged pipes", price: 65.00, category: "Chemicals", image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=6" },
-        { id: 13, name: "Pipe Cutter", description: "Professional pipe cutter for precise cuts", price: 120.00, category: "Tools", image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=7" },
-        { id: 14, name: "Bath Tub", description: "Modern acrylic bath tub with fittings", price: 1800.00, category: "Baths", image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=8" },
-        { id: 15, name: "Valve Set", description: "Complete valve set for plumbing systems", price: 280.00, category: "Valves", image: "https://images.unsplash.com/photo-1592921870789-04563d55041c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=9" }
-    ];
+    // Store for all products fetched from API
+    let allProductsData = [];
+    
+    // Load products from API
+    async function fetchProducts() {
+        try {
+            const response = await fetch('/api/products');
+            if (!response.ok) throw new Error('Failed to fetch products');
+            allProductsData = await response.json();
+            loadProducts(allProductsData);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+            // Fallback to empty array if API fails
+            allProductsData = [];
+            loadProducts([]);
+        }
+    }
+    
+    // Initial load
+    fetchProducts();
     
     // Load products
-    function loadProducts(products = productsData) {
+    function loadProducts(products = allProductsData) {
         const productsContainer = document.getElementById('products-container');
         const loadingIndicator = document.getElementById('loading-indicator');
         const noProductsMessage = document.getElementById('no-products');

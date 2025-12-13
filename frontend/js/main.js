@@ -145,49 +145,54 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Load featured products (mock data for demonstration)
+// Load featured products from API
 function loadFeaturedProducts() {
     const productsGrid = document.getElementById('featured-products');
     
     if (!productsGrid) return;
     
-    // Mock product data (in a real app, this would come from a server)
-    const mockProducts = [
-        { id: 1, name: "Modern Faucet", description: "High-quality chrome finish faucet for kitchen sinks", price: "₵ 450.00", image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" },
-        { id: 2, name: "PVC Pipes", description: "Durable PVC pipes for water supply systems", price: "₵ 120.00", image: "https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" },
-        { id: 3, name: "Water Pump", description: "Automatic water pump with pressure control", price: "₵ 850.00", image: "https://images.unsplash.com/photo-1592921870789-04563d55041c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" },
-        { id: 4, name: "Shower Set", description: "Complete shower set with rain shower head", price: "₵ 650.00", image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" }
-    ];
-    
-    // Clear the placeholder
-    productsGrid.innerHTML = '';
-    
-    // Add products to grid
-    mockProducts.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.className = 'product-card animate-on-scroll';
-        productCard.innerHTML = `
-            <div class="product-image">
-                <img src="${product.image}" alt="${product.name}">
-            </div>
-            <div class="product-info">
-                <h3 class="product-name">${product.name}</h3>
-                <p class="product-description">${product.description}</p>
-                <div class="product-price">${product.price}</div>
-                <button class="btn btn-cart">Add to Cart</button>
-            </div>
-        `;
-        
-        productsGrid.appendChild(productCard);
-    });
-    
-    // Trigger animation after loading
-    setTimeout(() => {
-        const animateElements = document.querySelectorAll('.animate-on-scroll');
-        animateElements.forEach(el => {
-            el.classList.add('visible');
+    // Fetch featured products from API
+    fetch('/api/products/featured')
+        .then(response => response.json())
+        .then(products => {
+            // Clear the placeholder
+            productsGrid.innerHTML = '';
+            
+            // Get only the first 4 featured products for homepage
+            const featuredProducts = products.slice(0, 4);
+            
+            // Add products to grid
+            featuredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card animate-on-scroll';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-price">₵ ${product.price.toFixed(2)}</div>
+                        <button class="btn btn-cart">Add to Cart</button>
+                    </div>
+                `;
+                
+                productsGrid.appendChild(productCard);
+            });
+            
+            // Trigger animation after loading
+            setTimeout(() => {
+                const animateElements = document.querySelectorAll('.animate-on-scroll');
+                animateElements.forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 300);
+        })
+        .catch(error => {
+            console.error('Error loading featured products:', error);
+            // Show error message
+            productsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #666;">Failed to load products. Please try again later.</p>';
         });
-    }, 300);
 }
 
 // Load services (mock data for demonstration)

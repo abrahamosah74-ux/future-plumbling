@@ -30,9 +30,13 @@
                 <div class="nav-actions">
                     <div class="search-container">
                         <input type="text" id="search-bar-products" placeholder="Search products...">
-                        <button id="search-btn-products"><i class="fas fa-search"></i></button>
+                        <button id="search-btn-products" title="Search products"><i class="fas fa-search"></i></button>
                     </div>
-                    <a href="https://wa.me/233547085680" class="whatsapp-btn" target="_blank">
+                    <button id="chat-with-agent" class="chat-agent-btn" title="Chat with Agent">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>Chat with Agent</span>
+                    </button>
+                    <a href="https://wa.me/233547085680" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">
                         <i class="fab fa-whatsapp"></i> WhatsApp
                     </a>
                     <button class="btn btn-cart" id="cart-toggle">
@@ -67,7 +71,7 @@
                 <div class="filter-right">
                     <div class="filter-options">
                         <span>Filter by:</span>
-                        <select class="filter-select" id="category-filter">
+                        <select class="filter-select" id="category-filter" title="Filter by category">
                             <option value="all">All Categories</option>
                             <option value="Faucets">Faucets</option>
                             <option value="Pipes">Pipes</option>
@@ -77,7 +81,7 @@
                             <option value="Tools">Tools</option>
                             <option value="Tanks">Tanks</option>
                         </select>
-                        <select class="filter-select" id="sort-filter">
+                        <select class="filter-select" id="sort-filter" title="Sort products by">
                             <option value="default">Sort by Default</option>
                             <option value="price-low">Price: Low to High</option>
                             <option value="price-high">Price: High to Low</option>
@@ -116,7 +120,7 @@
             </div>
             
             <!-- No Products Message -->
-            <div id="no-products" class="no-products-message" style="display: none;">
+            <div id="no-products" class="no-products-message">
                 <i class="fas fa-search"></i>
                 <h3>No products found</h3>
                 <p>Try adjusting your search or filter to find what you're looking for.</p>
@@ -154,7 +158,7 @@
             <div class="cta-content">
                 <h2>Need Professional Plumbing Services?</h2>
                 <p>Our expert plumbers are ready to help with installation, repair, and maintenance services.</p>
-                <a href="https://wa.me/233547085680" class="btn btn-primary" target="_blank">
+                <a href="https://wa.me/233547085680" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-whatsapp"></i> Contact on WhatsApp
                 </a>
             </div>
@@ -174,10 +178,10 @@
                     </div>
                     <p>Professional plumbing solutions for modern Ghanaian homes and businesses.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="https://wa.me/233547085680" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/233547085680" target="_blank" rel="noopener noreferrer" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 
@@ -220,9 +224,66 @@
     </footer>
 
     <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/233547085680" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/233547085680" class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+    <!-- Payment Method Modal -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Select Payment Method</h2>
+                <button class="modal-close" id="close-payment-modal" title="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-options">
+                    <div class="payment-option">
+                        <input type="radio" id="payment-whatsapp" name="payment-method" value="whatsapp" checked>
+                        <label for="payment-whatsapp">
+                            <div class="payment-option-header">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>WhatsApp Payment</span>
+                            </div>
+                            <p class="payment-option-desc">Send order via WhatsApp message</p>
+                        </label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="payment-mobile-money" name="payment-method" value="mobile-money">
+                        <label for="payment-mobile-money">
+                            <div class="payment-option-header">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Mobile Money</span>
+                            </div>
+                            <p class="payment-option-desc">Pay via Mobile Money (MTN, Vodafone, AirtelTigo)</p>
+                        </label>
+                    </div>
+                </div>
+                <div class="payment-note">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Both methods will send your order via WhatsApp with payment instructions</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-payment">Cancel</button>
+                <button class="btn btn-primary" id="confirm-payment">Proceed</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Widget -->
+    <div id="chat-widget" class="chat-widget">
+        <div class="chat-header">
+            <h3>Chat with Agent</h3>
+            <button id="close-chat" class="close-chat" title="Close chat"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="chat-messages" class="chat-messages"></div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type your message..." />
+            <button id="send-message" class="btn btn-primary" title="Send message"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script src="js/chat.js"></script>
 
     <script src="js/products.js"></script>
 </body>
