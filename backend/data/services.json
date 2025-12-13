@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "Pipe Installation",
+    "description": "Professional pipe installation for water supply and drainage systems using high-quality materials and modern techniques.",
+    "icon": "fas fa-wrench",
+    "priceRange": "₵ 200 - ₵ 1500",
+    "duration": "2-8 hours"
+  },
+  {
+    "id": 2,
+    "name": "Leak Repair",
+    "description": "Quick and efficient leak detection and repair services using advanced equipment to identify and fix leaks promptly.",
+    "icon": "fas fa-tint",
+    "priceRange": "₵ 150 - ₵ 800",
+    "duration": "1-4 hours"
+  },
+  {
+    "id": 3,
+    "name": "Bathroom Plumbing",
+    "description": "Complete bathroom plumbing solutions including installation of fixtures, piping, and drainage systems.",
+    "icon": "fas fa-shower",
+    "priceRange": "₵ 500 - ₵ 3000",
+    "duration": "4-12 hours"
+  },
+  {
+    "id": 4,
+    "name": "Water Heater Services",
+    "description": "Installation, repair, and maintenance of water heating systems including electric and solar water heaters.",
+    "icon": "fas fa-fire",
+    "priceRange": "₵ 300 - ₵ 2000",
+    "duration": "2-6 hours"
+  },
+  {
+    "id": 5,
+    "name": "Toilet Installation",
+    "description": "Professional toilet installation and repair services including bowl replacement and flushing system fixes.",
+    "icon": "fas fa-toilet",
+    "priceRange": "₵ 250 - ₵ 1200",
+    "duration": "2-5 hours"
+  },
+  {
+    "id": 6,
+    "name": "Water Filtration",
+    "description": "Installation of water filtration and purification systems for clean, safe drinking water throughout your home.",
+    "icon": "fas fa-filter",
+    "priceRange": "₵ 400 - ₵ 2500",
+    "duration": "3-6 hours"
+  },
+  {
+    "id": 7,
+    "name": "General Maintenance",
+    "description": "Routine plumbing maintenance and inspection services to prevent issues and ensure system longevity.",
+    "icon": "fas fa-tools",
+    "priceRange": "₵ 100 - ₵ 600",
+    "duration": "1-3 hours"
+  },
+  {
+    "id": 8,
+    "name": "Drain Cleaning",
+    "description": "Professional drain cleaning and blockage removal using hydro-jetting and mechanical methods.",
+    "icon": "fas fa-snowflake",
+    "priceRange": "₵ 180 - ₵ 900",
+    "duration": "1-4 hours"
+  },
+  {
+    "id": 9,
+    "name": "Emergency Services",
+    "description": "24/7 emergency plumbing services for urgent issues like burst pipes, major leaks, and sewer backups.",
+    "icon": "fas fa-home",
+    "priceRange": "₵ 300 - ₵ 2000",
+    "duration": "Immediate response"
+  }
+]

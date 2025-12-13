@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Future Plumbing Company</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <div class="logo">
+                    <a href="../index.html">
+                        <i class="fas fa-faucet"></i>
+                        <span>Future Plumbing</span>
+                    </a>
+                </div>
+                <p class="admin-subtitle">Admin Dashboard</p>
+            </div>
+            
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="#dashboard" class="admin-nav-link active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#orders" class="admin-nav-link" data-page="orders"><i class="fas fa-shopping-cart"></i> Orders <span class="badge" id="pending-orders">5</span></a></li>
+                    <li><a href="#products" class="admin-nav-link" data-page="products"><i class="fas fa-box"></i> Products</a></li>
+                    <li><a href="#services" class="admin-nav-link" data-page="services"><i class="fas fa-concierge-bell"></i> Services</a></li>
+                    <li><a href="#customers" class="admin-nav-link" data-page="customers"><i class="fas fa-users"></i> Customers</a></li>
+                    <li><a href="#messages" class="admin-nav-link" data-page="messages"><i class="fas fa-envelope"></i> Messages <span class="badge" id="new-messages">3</span></a></li>
+                    <li><a href="#settings" class="admin-nav-link" data-page="settings"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+                
+                <div class="admin-logout">
+                    <a href="../index.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Back to Website</a>
+                </div>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="admin-header-content">
+                    <h1 id="admin-page-title">Dashboard</h1>
+                    <div class="admin-user">
+                        <span class="user-name">Admin User</span>
+                        <div class="user-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Dashboard Content (Default) -->
+            <section id="dashboard-content" class="admin-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Orders</h3>
+                            <div class="stat-number">47</div>
+                            <div class="stat-change positive">+12% this month</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Revenue</h3>
+                            <div class="stat-number">₵ 24,580</div>
+                            <div class="stat-change positive">+8% this month</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Customers</h3>
+                            <div class="stat-number">156</div>
+                            <div class="stat-change positive">+5% this month</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Products</h3>
+                            <div class="stat-number">15</div>
+                            <div class="stat-change">Manage inventory</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Orders -->
+                <div class="admin-table-container">
+                    <div class="table-header">
+                        <h2>Recent Orders</h2>
+                        <a href="#orders" class="btn btn-primary view-all">View All</a>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#FP-0012</td>
+                                <td>Kwame Mensah</td>
+                                <td>2023-10-15</td>
+                                <td>₵ 1,250.00</td>
+                                <td><span class="status status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn-action view-order" data-id="12"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-action edit-order" data-id="12"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#FP-0011</td>
+                                <td>Ama Serwaa</td>
+                                <td>2023-10-14</td>
+                                <td>₵ 850.00</td>
+                                <td><span class="status status-completed">Completed</span></td>
+                                <td>
+                                    <button class="btn-action view-order" data-id="11"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-action edit-order" data-id="11"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#FP-0010</td>
+                                <td>Kojo Ansah</td>
+                                <td>2023-10-13</td>
+                                <td>₵ 2,150.00</td>
+                                <td><span class="status status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn-action view-order" data-id="10"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-action edit-order" data-id="10"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#FP-0009</td>
+                                <td>Esi Asante</td>
+                                <td>2023-10-12</td>
+                                <td>₵ 450.00</td>
+                                <td><span class="status status-completed">Completed</span></td>
+                                <td>
+                                    <button class="btn-action view-order" data-id="9"><i class="fas fa-eye"></i></button>
+                                    <button class="btn-action edit-order" data-id="9"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Orders Management -->
+            <section id="orders-content" class="admin-content">
+                <div class="admin-table-container">
+                    <div class="table-header">
+                        <h2>Order Management</h2>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" id="add-order"><i class="fas fa-plus"></i> Add Order</button>
+                            <div class="search-container">
+                                <input type="text" placeholder="Search orders..." id="search-orders">
+                                <button id="search-orders-btn"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="pending">Pending</button>
+                        <button class="filter-btn" data-filter="completed">Completed</button>
+                        <button class="filter-btn" data-filter="cancelled">Cancelled</button>
+                    </div>
+                    
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="select-all-orders"></th>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Products</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body">
+                            <!-- Orders will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                    
+                    <div class="table-footer">
+                        <div class="pagination">
+                            <button class="pagination-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                            <span class="pagination-info">Page 1 of 3</span>
+                            <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Products Management -->
+            <section id="products-content" class="admin-content">
+                <div class="admin-table-container">
+                    <div class="table-header">
+                        <h2>Product Management</h2>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" id="add-product"><i class="fas fa-plus"></i> Add Product</button>
+                            <button class="btn btn-secondary" id="import-products"><i class="fas fa-file-import"></i> Import</button>
+                            <div class="search-container">
+                                <input type="text" placeholder="Search products..." id="search-products">
+                                <button id="search-products-btn"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            <!-- Products will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Product Form Modal -->
+                <div class="modal" id="product-modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="product-modal-title">Add New Product</h3>
+                            <button class="close-modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="product-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="product-name">Product Name *</label>
+                                        <input type="text" id="product-name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="product-category">Category *</label>
+                                        <select id="product-category" required>
+                                            <option value="">Select Category</option>
+                                            <option value="Faucets">Faucets</option>
+                                            <option value="Pipes">Pipes</option>
+                                            <option value="Pumps">Pumps</option>
+                                            <option value="Showers">Showers</option>
+                                            <option value="Toilets">Toilets</option>
+                                            <option value="Tools">Tools</option>
+                                            <option value="Tanks">Tanks</option>
+                                            <option value="Fittings">Fittings</option>
+                                            <option value="Heaters">Heaters</option>
+                                            <option value="Chemicals">Chemicals</option>
+                                            <option value="Baths">Baths</option>
+                                            <option value="Valves">Valves</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="product-description">Description *</label>
+                                    <textarea id="product-description" rows="3" required></textarea>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="product-price">Price (₵) *</label>
+                                        <input type="number" id="product-price" step="0.01" min="0" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="product-stock">Stock Quantity *</label>
+                                        <input type="number" id="product-stock" min="0" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="product-image">Image URL</label>
+                                    <input type="text" id="product-image" placeholder="https://example.com/image.jpg">
+                                    <small>Or upload an image</small>
+                                    <input type="file" id="product-image-upload" accept="image/*" style="margin-top: 5px;">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="product-featured"> Featured Product
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" id="product-active"> Active
+                                    </label>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Save Product</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Services Management -->
+            <section id="services-content" class="admin-content">
+                <div class="admin-table-container">
+                    <div class="table-header">
+                        <h2>Service Management</h2>
+                        <button class="btn btn-primary" id="add-service"><i class="fas fa-plus"></i> Add Service</button>
+                    </div>
+                    
+                    <div class="services-grid-admin">
+                        <!-- Services will be loaded dynamically -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Customers Management -->
+            <section id="customers-content" class="admin-content">
+                <div class="admin-table-container">
+                    <div class="table-header">
+                        <h2>Customer Management</h2>
+                        <div class="table-actions">
+                            <div class="search-container">
+                                <input type="text" placeholder="Search customers..." id="search-customers">
+                                <button id="search-customers-btn"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Orders</th>
+                                <th>Total Spent</th>
+                                <th>Last Order</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customers-table-body">
+                            <!-- Customers will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Messages Management -->
+            <section id="messages-content" class="admin-content">
+                <div class="messages-container">
+                    <div class="messages-sidebar">
+                        <div class="messages-search">
+                            <input type="text" placeholder="Search messages...">
+                            <button><i class="fas fa-search"></i></button>
+                        </div>
+                        <div class="messages-list" id="messages-list">
+                            <!-- Messages list will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="messages-content">
+                        <div class="message-header">
+                            <h3 id="message-subject">Select a message to view</h3>
+                        </div>
+                        <div class="message-body" id="message-body">
+                            <div class="no-message-selected">
+                                <i class="fas fa-envelope-open"></i>
+                                <p>Select a message from the list to view its content</p>
+                            </div>
+                        </div>
+                        <div class="message-reply" id="message-reply" style="display: none;">
+                            <textarea placeholder="Type your reply here..."></textarea>
+                            <button class="btn btn-primary">Send Reply</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Settings Management -->
+            <section id="settings-content" class="admin-content">
+                <div class="settings-container">
+                    <div class="settings-tabs">
+                        <button class="settings-tab active" data-tab="general">General</button>
+                        <button class="settings-tab" data-tab="website">Website</button>
+                        <button class="settings-tab" data-tab="payment">Payment</button>
+                        <button class="settings-tab" data-tab="notifications">Notifications</button>
+                        <button class="settings-tab" data-tab="security">Security</button>
+                    </div>
+                    
+                    <div class="settings-content">
+                        <div id="general-settings" class="settings-tab-content active">
+                            <h3>General Settings</h3>
+                            <form id="general-settings-form">
+                                <div class="form-group">
+                                    <label for="company-name">Company Name</label>
+                                    <input type="text" id="company-name" value="Future Plumbing Company">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="company-email">Company Email</label>
+                                    <input type="email" id="company-email" value="jacobashiley45@icloud.com">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="company-phone">Company Phone</label>
+                                    <input type="tel" id="company-phone" value="0547085680">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="company-address">Company Address</label>
+                                    <textarea id="company-address" rows="3">Accra, Ghana</textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="business-hours">Business Hours</label>
+                                    <input type="text" id="business-hours" value="Mon-Fri: 8:00 AM - 6:00 PM, Sat: 9:00 AM - 4:00 PM">
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                        
+                        <div id="website-settings" class="settings-tab-content">
+                            <h3>Website Settings</h3>
+                            <form id="website-settings-form">
+                                <div class="form-group">
+                                    <label for="website-title">Website Title</label>
+                                    <input type="text" id="website-title" value="Future Plumbing Company">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="website-description">Website Description</label>
+                                    <textarea id="website-description" rows="3">Professional plumbing solutions for modern Ghanaian homes and businesses.</textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="primary-color">Primary Color</label>
+                                    <input type="color" id="primary-color" value="#1a73e8">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="secondary-color">Secondary Color</label>
+                                    <input type="color" id="secondary-color" value="#34a853">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="maintenance-mode"> Maintenance Mode
+                                    </label>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

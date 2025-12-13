@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products - Future Plumbing Company</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-faucet"></i>
+                        <span>Future Plumbing</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="products.html" class="nav-link active">Products</a></li>
+                    <li><a href="index.html#services" class="nav-link">Services</a></li>
+                    <li><a href="index.html#about" class="nav-link">About</a></li>
+                    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <div class="search-container">
+                        <input type="text" id="search-bar-products" placeholder="Search products...">
+                        <button id="search-btn-products"><i class="fas fa-search"></i></button>
+                    </div>
+                    <a href="https://wa.me/233547085680" class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <button class="btn btn-cart" id="cart-toggle">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count">0</span>
+                    </button>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Products Header -->
+    <section class="products-header">
+        <div class="container">
+            <h1 class="section-title animate__animated animate__fadeInDown">Our Plumbing Products</h1>
+            <p class="section-subtitle animate__animated animate__fadeInUp">High-quality plumbing supplies for every need</p>
+        </div>
+    </section>
+
+    <!-- Products Filter Section -->
+    <section class="products-filter-section">
+        <div class="container">
+            <div class="products-filter">
+                <div class="filter-left">
+                    <span id="product-count">15</span> Products Available
+                </div>
+                <div class="filter-right">
+                    <div class="filter-options">
+                        <span>Filter by:</span>
+                        <select class="filter-select" id="category-filter">
+                            <option value="all">All Categories</option>
+                            <option value="Faucets">Faucets</option>
+                            <option value="Pipes">Pipes</option>
+                            <option value="Pumps">Pumps</option>
+                            <option value="Showers">Showers</option>
+                            <option value="Toilets">Toilets</option>
+                            <option value="Tools">Tools</option>
+                            <option value="Tanks">Tanks</option>
+                        </select>
+                        <select class="filter-select" id="sort-filter">
+                            <option value="default">Sort by Default</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name">Name A-Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid Section -->
+    <section class="products-grid-section">
+        <div class="container">
+            <div class="products-grid" id="products-container">
+                <!-- Products will be loaded dynamically -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Modern Faucet">
+                        <span class="product-badge">Featured</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Modern Faucet</h3>
+                        <p class="product-description">High-quality chrome finish faucet for kitchen sinks</p>
+                        <div class="product-category">Faucets</div>
+                        <div class="product-price">₵ 450.00</div>
+                        <button class="btn btn-cart add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" class="loading-indicator">
+                <div class="spinner"></div>
+                <p>Loading products...</p>
+            </div>
+            
+            <!-- No Products Message -->
+            <div id="no-products" class="no-products-message" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No products found</h3>
+                <p>Try adjusting your search or filter to find what you're looking for.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Shopping Cart</h3>
+            <button class="close-cart" id="close-cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be added here dynamically -->
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-summary">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">₵ 0.00</span>
+            </div>
+            <button class="btn btn-primary" id="checkout-btn">Proceed to Checkout</button>
+            <button class="btn btn-secondary" id="clear-cart">Clear Cart</button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Need Professional Plumbing Services?</h2>
+                <p>Our expert plumbers are ready to help with installation, repair, and maintenance services.</p>
+                <a href="https://wa.me/233547085680" class="btn btn-primary" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <a href="index.html">
+                            <i class="fas fa-faucet"></i>
+                            <span>Future Plumbing</span>
+                        </a>
+                    </div>
+                    <p>Professional plumbing solutions for modern Ghanaian homes and businesses.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/233547085680" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Product Categories</h3>
+                    <ul>
+                        <li><a href="products.html?category=Faucets">Faucets</a></li>
+                        <li><a href="products.html?category=Pipes">Pipes</a></li>
+                        <li><a href="products.html?category=Pumps">Pumps</a></li>
+                        <li><a href="products.html?category=Tools">Tools</a></li>
+                        <li><a href="products.html?category=Tanks">Water Tanks</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fab fa-whatsapp"></i> 0547085680</li>
+                        <li><i class="fas fa-envelope"></i> jacobashiley45@icloud.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Accra, Ghana</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Future Plumbing Company. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/233547085680" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="js/products.js"></script>
+</body>
+</html>
