@@ -360,52 +360,89 @@ app.get('/admin', (req, res) => {
 });
 
 // Image upload endpoint
-app.post('/api/upload-image', upload.single('image'), (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ success: false, message: 'No file uploaded' });
+app.post('/api/upload-image', (req, res) => {
+  // Handle upload with multer error handling
+  upload.single('image')(req, res, function(err) {
+    if (err instanceof multer.MulterError) {
+      console.error('Multer error:', err);
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Upload error: ' + err.message 
+      });
+    } else if (err) {
+      console.error('Upload error:', err);
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Upload error: ' + err.message 
+      });
     }
     
-    console.log('File uploaded:', req.file.filename);
-    
-    res.json({ 
-      success: true, 
-      message: 'Image uploaded successfully',
-      imageUrl: `/uploads/${req.file.filename}`,
-      filename: req.file.filename
-    });
-  } catch (err) {
-    console.error('Upload error:', err);
-    res.status(500).json({ 
-      success: false, 
-      message: err.message || 'Error uploading file'
-    });
-  }
+    try {
+      if (!req.file) {
+        return res.status(400).json({ success: false, message: 'No file uploaded' });
+      }
+      
+      console.log('File uploaded:', req.file.filename);
+      
+      res.json({ 
+        success: true, 
+        message: 'Image uploaded successfully',
+        imageUrl: `/uploads/${req.file.filename}`,
+        filename: req.file.filename
+      });
+    } catch (err) {
+      console.error('Upload error:', err);
+      res.status(500).json({ 
+        success: false, 
+        message: err.message || 'Error uploading file'
+      });
+    }
+  });
 });
 
 // Profile picture upload endpoint
-app.post('/api/upload-profile', upload.single('image'), (req, res) => {
-  try {
-    if (!req.file) {
-      console.error('No file in request');
-      return res.status(400).json({ success: false, message: 'No file uploaded' });
+app.post('/api/upload-profile', (req, res) => {
+  // Handle upload with multer error handling
+  upload.single('image')(req, res, function(err) {
+    if (err instanceof multer.MulterError) {
+      console.error('Multer error:', err);
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Upload error: ' + err.message 
+      });
+    } else if (err) {
+      console.error('Upload error:', err);
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Upload error: ' + err.message 
+      });
     }
     
-    console.log('Profile picture uploaded:', req.file.filename);
-    
-    res.json({ 
-      success: true, 
-      message: 'Profile picture uploaded successfully',
-      imageUrl: `/uploads/${req.file.filename}`,
-      filename: req.file.filename
-    });
-  } catch (err) {
-    console.error('Profile upload error:', err);
-    res.status(500).json({ 
-      success: false, 
-      message: err.message || 'Error uploading profile picture'
-    });
-  }
+    try {
+      if (!req.file) {
+        console.error('No file received in request');
+        return res.status(400).json({ 
+          success: false, 
+          message: 'No file uploaded. Please select an image.' 
+        });
+      }
+      
+      console.log('Profile picture uploaded:', req.file.filename);
+      
+      res.json({ 
+        success: true, 
+        message: 'Profile picture uploaded successfully',
+        imageUrl: `/uploads/${req.file.filename}`,
+        filename: req.file.filename
+      });
+    } catch (err) {
+      console.error('Profile upload error:', err);
+      res.status(500).json({ 
+        success: false, 
+        message: err.message || 'Error uploading profile picture'
+      });
+    }
+  });
 });
 
 // Store orders in memory (in production, use a database)
