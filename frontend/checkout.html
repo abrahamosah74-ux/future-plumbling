@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Future Plumbing</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-faucet"></i>
+                        <span>Future Plumbing</span>
+                    </a>
+                </div>
+                <div class="nav-actions">
+                    <a href="index.html" class="btn btn-secondary">← Back to Home</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section">
+        <div class="container">
+            <div class="checkout-grid">
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+                    <div class="order-items" id="orderItems">
+                        <!-- Items will be loaded here -->
+                    </div>
+                    <div class="order-total">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">₵0.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Tax (5%):</span>
+                            <span id="tax">₵0.00</span>
+                        </div>
+                        <div class="total-row total-amount">
+                            <span>Total:</span>
+                            <span id="total">₵0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkout Form -->
+                <div class="checkout-form">
+                    <h2>Checkout</h2>
+                    <form id="checkoutForm">
+                        <div class="form-group">
+                            <label for="customerName">Full Name *</label>
+                            <input type="text" id="customerName" placeholder="John Doe" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customerEmail">Email Address *</label>
+                            <input type="email" id="customerEmail" placeholder="john@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customerPhone">Phone Number *</label>
+                            <input type="tel" id="customerPhone" placeholder="+233 XX XXX XXXX" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="deliveryAddress">Delivery Address *</label>
+                            <textarea id="deliveryAddress" placeholder="Full address" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Special Instructions (Optional)</label>
+                            <textarea id="notes" placeholder="Any special requests or notes"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="termsCheck" required>
+                                I agree to the terms and conditions
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="payButton">
+                            <i class="fas fa-lock"></i> Pay with Paystack
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Future Plumbing Company. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+        const PAYSTACK_PUBLIC_KEY = 'pk_test_YOUR_PUBLIC_KEY_HERE'; // Replace with your actual key
+
+        // Load cart from localStorage
+        function loadCheckout() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) {
+                document.getElementById('orderItems').innerHTML = '<p>Your cart is empty</p>';
+                return;
+            }
+
+            let html = '';
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                html += `
+                    <div class="order-item">
+                        <div class="item-info">
+                            <h4>${item.name}</h4>
+                            <p>${item.type}</p>
+                        </div>
+                        <div class="item-price">
+                            <span>₵${item.price.toFixed(2)} x ${item.quantity}</span>
+                            <span class="item-total">₵${itemTotal.toFixed(2)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const tax = subtotal * 0.05;
+            const total = subtotal + tax;
+
+            document.getElementById('orderItems').innerHTML = html;
+            document.getElementById('subtotal').textContent = '₵' + subtotal.toFixed(2);
+            document.getElementById('tax').textContent = '₵' + tax.toFixed(2);
+            document.getElementById('total').textContent = '₵' + total.toFixed(2);
+
+            // Store for payment
+            window.cartData = { cart, subtotal, tax, total };
+        }
+
+        // Handle checkout form submission
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('customerName').value;
+            const email = document.getElementById('customerEmail').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('deliveryAddress').value;
+            const notes = document.getElementById('notes').value;
+
+            // Initialize Paystack payment
+            const handler = PaystackPop.setup({
+                key: PAYSTACK_PUBLIC_KEY,
+                email: email,
+                amount: Math.round(window.cartData.total * 100), // Convert to kobo
+                ref: '' + Math.floor(Math.random() * 1000000000), // Unique reference
+                onClose: function() {
+                    alert('Payment window closed.');
+                },
+                onSuccess: async function(response) {
+                    // Verify payment and save order
+                    try {
+                        const orderData = {
+                            reference: response.reference,
+                            name,
+                            email,
+                            phone,
+                            address,
+                            notes,
+                            items: window.cartData.cart,
+                            total: window.cartData.total,
+                            status: 'completed'
+                        };
+
+                        const res = await fetch('/api/orders', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(orderData)
+                        });
+
+                        if (res.ok) {
+                            localStorage.removeItem('cart');
+                            alert('Payment successful! Thank you for your order.');
+                            window.location.href = 'index.html';
+                        } else {
+                            alert('Order creation failed. Please contact support.');
+                        }
+                    } catch (err) {
+                        console.error('Error saving order:', err);
+                        alert('Payment successful but order save failed. Please contact support.');
+                    }
+                }
+            });
+            handler.openIframe();
+        });
+
+        // Load checkout on page load
+        window.addEventListener('DOMContentLoaded', loadCheckout);
+    </script>
+
+    <style>
+        .checkout-section {
+            padding: 40px 0;
+            min-height: 60vh;
+            background: #f8f9fa;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .order-summary, .checkout-form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .order-summary h2, .checkout-form h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info h4 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+
+        .item-info p {
+            margin: 0;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .item-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .item-total {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .order-total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .total-amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-top: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group label input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        #payButton {
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>

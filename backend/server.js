@@ -726,6 +726,188 @@ app.get('/api/admin/stats', (req, res) => {
   });
 });
 
+// Orders API - Create new order
+app.post('/api/orders', (req, res) => {
+  try {
+    const { reference, name, email, phone, address, notes, items, total, status } = req.body;
+    
+    // Validate required fields
+    if (!reference || !name || !email || !items || !total) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Missing required fields' 
+      });
+    }
+
+    // Read orders from file
+    const ordersPath = path.join(__dirname, 'data', 'orders.json');
+    let orders = [];
+    
+    if (fs.existsSync(ordersPath)) {
+      const data = fs.readFileSync(ordersPath, 'utf8');
+      orders = JSON.parse(data || '[]');
+    }
+
+    // Create new order
+    const newOrder = {
+      id: Date.now().toString(),
+      reference,
+      name,
+      email,
+      phone,
+      address,
+      notes: notes || '',
+      items,
+      total,
+      status: status || 'pending',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    orders.push(newOrder);
+
+    // Write to file
+    fs.writeFileSync(ordersPath, JSON.stringify(orders, null, 2));
+
+    res.status(201).json({
+      success: true,
+      message: 'Order created successfully',
+      order: newOrder
+    });
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to create order'
+    });
+  }
+});
+
+// Orders API - Get all orders
+app.get('/api/orders', (req, res) => {
+  try {
+    const ordersPath = path.join(__dirname, 'data', 'orders.json');
+    let orders = [];
+
+    if (fs.existsSync(ordersPath)) {
+      const data = fs.readFileSync(ordersPath, 'utf8');
+      orders = JSON.parse(data || '[]');
+    }
+
+    res.json({
+      success: true,
+      orders: orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    });
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch orders'
+    });
+  }
+});
+
+// Orders API - Get single order
+app.get('/api/orders/:id', (req, res) => {
+  try {
+    const ordersPath = path.join(__dirname, 'data', 'orders.json');
+    let orders = [];
+
+    if (fs.existsSync(ordersPath)) {
+      const data = fs.readFileSync(ordersPath, 'utf8');
+      orders = JSON.parse(data || '[]');
+    }
+
+    const order = orders.find(o => o.id === req.params.id);
+    
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      order
+    });
+  } catch (error) {
+    console.error('Error fetching order:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch order'
+    });
+  }
+});
+
+// Orders API - Update order status
+app.put('/api/orders/:id', (req, res) => {
+  try {
+    const { status } = req.body;
+    const ordersPath = path.join(__dirname, 'data', 'orders.json');
+    let orders = [];
+
+    if (fs.existsSync(ordersPath)) {
+      const data = fs.readFileSync(ordersPath, 'utf8');
+      orders = JSON.parse(data || '[]');
+    }
+
+    const orderIndex = orders.findIndex(o => o.id === req.params.id);
+    
+    if (orderIndex === -1) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found'
+      });
+    }
+
+    orders[orderIndex].status = status;
+    orders[orderIndex].updatedAt = new Date().toISOString();
+
+    fs.writeFileSync(ordersPath, JSON.stringify(orders, null, 2));
+
+    res.json({
+      success: true,
+      message: 'Order updated successfully',
+      order: orders[orderIndex]
+    });
+  } catch (error) {
+    console.error('Error updating order:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update order'
+    });
+  }
+});
+
+// Paystack - Verify Payment
+app.post('/api/paystack/verify', (req, res) => {
+  try {
+    const { reference } = req.body;
+
+    if (!reference) {
+      return res.status(400).json({
+        success: false,
+        message: 'Reference is required'
+      });
+    }
+
+    // In production, you would verify the payment with Paystack API
+    // For now, we'll just confirm the payment
+    res.json({
+      success: true,
+      message: 'Payment verified',
+      reference
+    });
+  } catch (error) {
+    console.error('Error verifying payment:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to verify payment'
+    });
+  }
+});
+
 // Error handling for multer (must come before catch-all route)
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
