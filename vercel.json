@@ -8,12 +8,24 @@
     {
       "src": "frontend/**/*.{html,css,js}",
       "use": "@vercel/static"
+    },
+    {
+      "src": "backend/admin/**/*.{html,css,js}",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
       "dest": "backend/server.js"
+    },
+    {
+      "src": "/admin/(.*)",
+      "dest": "backend/admin/$1"
+    },
+    {
+      "src": "/admin",
+      "dest": "backend/admin/admin.html"
     },
     {
       "src": "/(.*)",
