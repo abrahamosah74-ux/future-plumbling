@@ -86,8 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('service-modal-title').textContent = 'Add New Service';
         }
     }, false);
-        }
-    });
     
     // Product form submission
     if (productForm) {
