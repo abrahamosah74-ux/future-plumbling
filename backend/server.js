@@ -361,7 +361,18 @@ app.get('/admin', (req, res) => {
 
 // Image upload endpoint
 app.post('/api/upload-image', (req, res) => {
-  // Handle upload with multer error handling
+  // File uploads not supported on Vercel (no persistent filesystem)
+  // This feature works in local development only
+  const isVercel = process.env.VERCEL === 'true';
+  
+  if (isVercel) {
+    return res.status(501).json({ 
+      success: false, 
+      message: 'File uploads are not supported on Vercel. Use local development or integrate cloud storage (AWS S3, Cloudinary).' 
+    });
+  }
+  
+  // Handle upload with multer error handling (local development)
   upload.single('image')(req, res, function(err) {
     if (err instanceof multer.MulterError) {
       console.error('Multer error:', err);
@@ -402,7 +413,18 @@ app.post('/api/upload-image', (req, res) => {
 
 // Profile picture upload endpoint
 app.post('/api/upload-profile', (req, res) => {
-  // Handle upload with multer error handling
+  // File uploads not supported on Vercel (no persistent filesystem)
+  // This feature works in local development only
+  const isVercel = process.env.VERCEL === 'true';
+  
+  if (isVercel) {
+    return res.status(501).json({ 
+      success: false, 
+      message: 'Profile upload is not supported on Vercel. Use local development or integrate cloud storage.' 
+    });
+  }
+  
+  // Handle upload with multer error handling (local development)
   upload.single('image')(req, res, function(err) {
     if (err instanceof multer.MulterError) {
       console.error('Multer error:', err);
