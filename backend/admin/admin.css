@@ -425,7 +425,10 @@
     z-index: 1000;
 }
 
-.modal.active,
+.modal.active {
+    display: flex !important;
+}
+
 .modal[style*="display: flex"] {
     display: flex !important;
 }

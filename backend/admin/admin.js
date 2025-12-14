@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Close modal when clicking outside
     window.addEventListener('click', function(e) {
+        // Only close if clicking directly on the modal backdrop, not inside modal-content
         if (e.target === productModal) {
             productModal.style.display = 'none';
             productModal.classList.remove('active');
@@ -83,6 +84,8 @@ document.addEventListener('DOMContentLoaded', function() {
             serviceForm.reset();
             delete serviceForm.dataset.editingServiceId;
             document.getElementById('service-modal-title').textContent = 'Add New Service';
+        }
+    }, false);
         }
     });
     
