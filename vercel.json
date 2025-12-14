@@ -1,34 +1,26 @@
 {
   "version": 2,
-  "buildCommand": "npm install && cd backend && npm install",
-  "outputDirectory": "frontend",
+  "builds": [
+    {
+      "src": "backend/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "frontend/**/*.{html,css,js}",
+      "use": "@vercel/static"
+    }
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
       "dest": "backend/server.js"
     },
     {
-      "src": "/admin",
-      "headers": {
-        "Cache-Control": "public, max-age=3600"
-      },
-      "dest": "backend/admin/admin.html"
-    },
-    {
-      "src": "/admin/(.*)",
-      "dest": "backend/admin/$1"
-    },
-    {
-      "src": "/uploads/(.*)",
-      "dest": "backend/uploads/$1"
-    },
-    {
-      "src": "/(.*\\..*)",
-      "dest": "frontend/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "frontend/index.html"
+      "dest": "/frontend/$1"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
