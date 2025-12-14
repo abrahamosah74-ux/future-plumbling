@@ -50,15 +50,9 @@ function handleProfileUploadClick(e) {
         body: formData
       });
       
-      if (!res.ok) {
-        const errorData = await res.json();
-        showAdminNotification(errorData.message || 'Upload failed', 'error');
-        return;
-      }
-      
       const data = await res.json();
       
-      if (data.success) {
+      if (res.ok && data.success) {
         // Update the avatar with the new image
         const userAvatar = document.querySelector('.user-avatar');
         if (userAvatar) {
@@ -82,6 +76,7 @@ function handleProfileUploadClick(e) {
         }
         showAdminNotification('Profile picture updated successfully!', 'success');
       } else {
+        console.error('Upload response error:', data);
         showAdminNotification(data.message || 'Failed to upload profile picture', 'error');
       }
     } catch (err) {

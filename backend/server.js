@@ -387,6 +387,7 @@ app.post('/api/upload-image', upload.single('image'), (req, res) => {
 app.post('/api/upload-profile', upload.single('image'), (req, res) => {
   try {
     if (!req.file) {
+      console.error('No file in request');
       return res.status(400).json({ success: false, message: 'No file uploaded' });
     }
     
